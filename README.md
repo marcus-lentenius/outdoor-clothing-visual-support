@@ -9,22 +9,23 @@ När barnet har klätt på sig respektive klädesplagg ska hen kunna markera kl�
 ----
 
 Termer:
-Kort
+
+**Kort**
 En komponent för ett klädesplagg som innehåller bild på och data; namn, typ, högsta och lägsta temperatur samt vilka väderförhållanden som klädesplagget är lämplig för.
 
-Lista
+**Lista**
 En listvy som påminner om en att-göra-lista. I denna kommer valda Kort att läggas till och tas bord. Dels kommer detta ske automatiskt.
 
-Garderob
+**Garderob**
 En vy med åtkomst till alla lagrade kort
 
-Snabbåtkomst
+**Snabbåtkomst**
 En förenklad listvy av alla lagrade kort.
 
-Förslagsfält
+**Förslagsfält**
 En listvy med föreslagna Kort baserat på väderprognos.
 
-Bildserie
+**Bildserie**
 En vy som endast visar innehållet i Listan.
 
 ----
