@@ -1,0 +1,52 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.vscode
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+images/rainJacket.png
+images/t/10634002_regnhat_sort.jpg
+images/t/119155-400-2320_4a.jpeg
+images/t/266559_112_PAX_SO PU LINED JACKET JR.png
+images/t/288348_102_CROSS SPORTSWEAR_SO URBAN JACKET JR.png
+images/t/291765_101_AUCLAIR_SO GUY GLOVE SR.png
+images/t/307246_101_PAX_ SO PU LINED PNT JR.png
+images/t/308104_101_DR ZIPE_SO BOARD PANT JR.png
+images/t/7325853541030.jpg
+images/t/7579545_max.jpg
+images/t/b_rnesandal_lukket_smal_71206119_505_-cognac_1.jpg
+images/t/H5012230590_S.jpg
+images/t/image.jpg
+images/t/original-vinterhue-fra-civilforsvaret_AS13501_56_1_1.jpg
+images/t/reima-marmara-shorts-barn-blue-1.jpg
+images/t/urberg-varm-kids-boot-brown.jpg
+images/t/x_large_2x-9772.jpg
+images/winterJacket.png
+src/components/Cond.js
+src/components/ExploreContainer.tsx
+src/components/ExploreContainer.css
+src/components/TestApi.js
+images/noImage.png
+images/imageOverlay.png
+src/pages/Home.tsx
+src/pages/Home.css
+src/scripts/firebaseToken.js
+src/scripts/openWeatherMapToken.js
