@@ -5,13 +5,14 @@ import Header from '../../shared/Header';
 import { addToWardrobe, updateGarment, addToMiddleLayers } from '../../../scripts/wardrobe';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import noImage from '../../../images/noImage.png';
-import Thumbnail from '../Thumbnail';
+import Thumbnail from '../../shared/Thumbnail';
 import { snow, cloudy, leaf, rainy, sunny, accessibility, arrowUndo, arrowUp, swapVertical, cloud, list, shirt } from 'ionicons/icons';
 import Condition from './Condition';
 import ImageBank from './ImageBank';
 import InnerLayerGrade from './InnerLayerGrade';
 import { useHistory } from 'react-router';
 import InnerLayerType from './InnerLayerType';
+import { listOfPictogram } from '../../../scripts/pictogram';
 
 
 const CreateGarment = ({ props }) => {
@@ -59,7 +60,7 @@ const CreateGarment = ({ props }) => {
             if (props.history.location.state.condition.includes('clear') && !clearState) {
                 setClearState(true);
             }
-            if (props.history.location.state.condition.includes('cloud') && !cloudState) {
+            if (props.history.location.state.condition.includes('clouds') && !cloudState) {
                 setCloudState(true);
             }
             if (props.history.location.state.condition.includes('rain') && !rainState) {
@@ -86,10 +87,10 @@ const CreateGarment = ({ props }) => {
         }
     }, [inUpdate])
 
-
     //TODO: move to a export function?
     //TODO: Set comment
     const loadImages = async () => {
+        const s = await getStorageImages();
         setListOfImages(await getStorageImages());
     }
 
@@ -149,7 +150,7 @@ const CreateGarment = ({ props }) => {
                 conditions.push('clear');
             }
             if (cloudState) {
-                conditions.push('cloud');
+                conditions.push('clouds');
             }
 
             garment.condition = conditions;
@@ -170,13 +171,13 @@ const CreateGarment = ({ props }) => {
                 await addToWardrobe(garment);   // Creates a document with the garment in firestore
 
                 // Redirect to /ManageGarments with the type to display the garment
-                // history.push({
-                //     pathname: '/ManageGarments',
-                //     state: {
-                //         type: garment.type,
-                //         redirected: true,
-                //     }
-                // });
+                history.push({
+                    pathname: '/ManageGarments',
+                    state: {
+                        type: garment.type,
+                        redirected: true,
+                    }
+                });
             }
         }
     }
@@ -213,8 +214,8 @@ const CreateGarment = ({ props }) => {
         },
     }
 
-    return (
-        <IonContent scrollY>
+    return (<>
+        <IonContent scrollY >
             <form onSubmit={(e) => {
                 handleSubmit(e);
             }} noValidate autoComplete="off">
@@ -232,7 +233,7 @@ const CreateGarment = ({ props }) => {
                         <IonInput
                             name="name"
                             value={garment.name}
-                            placeholder="Gula jackan"
+                            placeholder="Namn"
                             onIonChange={e => garment.name = e.detail.value} />
                     </IonItem>
 
@@ -242,7 +243,7 @@ const CreateGarment = ({ props }) => {
                             value={garment.type}
                             name="type"
                             interface="popover"
-                            placeholder="Type"
+                            placeholder="Typ"
                             onIonChange={(e) => {
                                 garment.type = e.detail.value;
                                 setGarment({ ...garment });
@@ -278,14 +279,19 @@ const CreateGarment = ({ props }) => {
                                 <IonInput
                                     type="number"
                                     name="tempMax"
-                                    placeholder="10"
+                                    placeholder="Max temperatur"
                                     value={garment.tempMax}
                                     onIonChange={e => garment.tempMax = e.detail.value} />
 
                             </ IonItem>
                             {/* Minimum temperature input */}
                             <IonItem>
-                                <IonInput value={garment.tempMin} onIonChange={e => garment.tempMin = e.detail.value} type="number" name="tempMin" placeholder="-5" />
+                                <IonInput
+                                    value={garment.tempMin}
+                                    onIonChange={e => garment.tempMin = e.detail.value}
+                                    type="number"
+                                    name="tempMin"
+                                    placeholder="Min temperatur" />
                             </IonItem>
 
                             {/* Displays icons for choosing what weather condition the garment is suited for */}
@@ -297,8 +303,8 @@ const CreateGarment = ({ props }) => {
                                 <Condition ionIcon={sunny} state={clearState} setState={setClearState} />
                                 <div style={style.itemDivider} />
                                 <Condition ionIcon={cloudy} state={cloudState} setState={setCloudState} />
-                                <div style={style.itemDivider} />
-                                <Condition ionIcon={leaf} state={windState} setState={setWindState} />
+                                {/* <div style={style.itemDivider} />
+                                <Condition ionIcon={leaf} state={windState} setState={setWindState} /> */}
                             </IonItem>
                         </>
                     }
@@ -313,7 +319,20 @@ const CreateGarment = ({ props }) => {
                     //         redirected: true,
                     //     },
                     // }}>Update</IonButton>
-                    <IonButton type="submit">Update</IonButton>
+                    <>
+                        <IonButton type="submit">Update</IonButton>
+                        <IonButton 
+                        onClick={()=>{
+                            history.push({
+                                pathname: '/ManageGarments',
+                                state: {
+                                    type: garment.type,
+                                    redirected: true,
+                                }
+                            });
+                        }}
+                        >Cancel</IonButton>
+                    </>
                     :
                     // <IonButton routerLink="/ManageGarments" type="submit">
                     <IonButton type="submit">
@@ -321,15 +340,18 @@ const CreateGarment = ({ props }) => {
                     </IonButton>
                 }
 
-                {/* Display the image bank */}
-                <IonGrid>
-                    <IonRow>
-                        <ImageBank loadImages={loadImages} setChosenImage={setChosenImage} chooseImage={chooseImage} listOfImages={listOfImages} />
-                    </IonRow>
-                </IonGrid>
             </form>
-        </IonContent >
-    );
+            {/* Display the image bank */}
+            <IonGrid>
+                <IonRow>
+                    <ImageBank loadImages={loadImages} setChosenImage={setChosenImage} chooseImage={chooseImage} listOfImages={listOfImages} />
+                </IonRow>
+                <IonRow>
+                    <ImageBank loadImages={undefined} setChosenImage={setChosenImage} chooseImage={chooseImage} listOfImages={listOfPictogram()} />
+                </IonRow>
+            </IonGrid>
+        </IonContent>
+    </>);
 }
 
 export default CreateGarment;

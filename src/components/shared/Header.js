@@ -9,10 +9,10 @@ const Header = () => {
         <IonHeader>
             <IonToolbar color="primary">
                 <IonMenuButton slot="start" color="secondary" />
-                <IonButton routerLink="/ParentView">List of Garments</IonButton>
+                <IonButton routerLink="/ParentView">List</IonButton>
                 <IonButton routerLink="/ManageGarments">My Garments</IonButton>
                 <IonButton routerLink="/UserView">UserView</IonButton>
-                <IonButton routerLink="/TestApi">TestApi</IonButton>
+                {/* <IonButton routerLink="/TestApi">TestApi</IonButton> */}
             </IonToolbar>
         </IonHeader>
     );

@@ -9,8 +9,8 @@ ion-icon{
 } */
 
 .container {
-    width: 300px;
-    height: 300px;
+    width: 30vw;
+    height: 30vw;
     position: relative;
 }
 
@@ -18,8 +18,8 @@ ion-icon{
     position: absolute;
     top: 0;
     left: 0;
-    width: 300px;
-    height: 300px;
+    width: 30vw;
+    height: 30vw;
 }
 
 .hidden {

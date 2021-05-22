@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonButton, IonContent, IonInput, IonItem, IonList, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -22,65 +22,87 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import ParentView from './components/ParentView/ParentView';
-import ManageGarments from './components/ParentView/ManageGarments';
+import ManageGarments from './components/ParentView/manageGarments/ManageGarments';
 import Login from './components/Login'
 import CreateGarment from './components/ParentView/CreateGarment/CreateGarment'
 import UserView from './components/UserView/UserView';
 import Header from './components/shared/Header';
-import { anyCurrentUser } from './scripts/firebase';
+import { anyCurrentUser, signIn, signOut } from './scripts/firebase';
 import { isTemplateExpression } from 'typescript';
 import TestApi from './components/TestApi';
 
 const App = () => {
-  const [loggedInChecked, setLoggedInChecked] = useState(false);
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  // const [loggedInChecked, setLoggedInChecked] = useState(false);
+  // const [isSignedIn, setIsSignedIn] = useState(false);
 
-  // //TODO: Is this even needed?
-  const handleSignIn = async () => {
-    // if(localStorage.getItem('isAuthenticated')){
-    //   setIsSignedIn(true);
-    // }
-    const isAuthenticated = await anyCurrentUser();
-    if (isAuthenticated) {
-      setIsSignedIn(true);
+  // const handleSignIn = async () => {
+  //   const isAuthenticated = await anyCurrentUser();
+  //   if (isAuthenticated) {
+  //     setIsSignedIn(true);
+  //   }
+  //   setLoggedInChecked(true);
+  // }
+
+  // if (!loggedInChecked) {
+  //   handleSignIn();
+  // }
+
+  const [authenticated, setAuthenticated] = useState<Boolean>(false);
+
+  useEffect(() => {
+    checkAuthentication();
+  }, [])
+
+  // Check if any user is already authenticated
+  const checkAuthentication = async (): Promise<void> => {
+    const isAuthenticated: any = await anyCurrentUser();
+    setAuthenticated(isAuthenticated);
+  }
+
+  // Handles the authentication, sign in and sign out
+  const handleAuthentication = async (): Promise<void> => {
+    if (!authenticated) {
+      const signedIn = signIn();
+      setAuthenticated(signedIn);
     }
-    setLoggedInChecked(true);
+    if (authenticated) {
+      const signedOut = signOut();
+      setAuthenticated(signedOut);
+    }
   }
-
-  if (!loggedInChecked) {
-    handleSignIn();
-  }
-
   return (
     <>
-      {loggedInChecked ?
+      {/* {loggedInChecked ? */}
+      {/* {authenticated ? */}
         <IonApp>
           <IonContent style={{ maxHeight: 61 }}>
             <Header />
           </IonContent>
           <IonContent scrollY>
-            {
-              isSignedIn === true ?
-                <IonReactRouter>
-                  <IonRouterOutlet>
-                    <Route path="/ParentView" component={ParentView} />
-                    <Route path="/ManageGarments" render={(props) => <ManageGarments props={props} />} />
-                    <Route path="/CreateGarment" render={(props) => <CreateGarment props={props} />} />
-                    <Route path="/UserView" component={UserView} />
-                    <Route path="/TestApi" component={TestApi} />
-                    <Route path="/Login" component={Login} />
-                    <Route exact path="/" render={() => <Redirect to="/ParentView" />} />
-                  </IonRouterOutlet>
-                </IonReactRouter>
-                :
-                // <IonButton onClick={() => handleSignIn(true)}>{isSignedIn}</IonButton>
-                <Login handleSignIn={handleSignIn} />
+            {authenticated ?
+            // {isSignedIn ?
+              <IonReactRouter>
+                <IonRouterOutlet>
+                  <Route path="/ParentView" component={ParentView} />
+                  <Route path="/ManageGarments" render={(props) => <ManageGarments props={props} />} />
+                  <Route path="/CreateGarment" render={(props) => <CreateGarment props={props} />} />
+                  <Route path="/UserView" component={UserView} />
+                  <Route path="/Login" component={Login} />
+                  <Route path="/TestApi" component={TestApi} />
+                  <Route exact path="/" render={() => <Redirect to="/ParentView" />} />
+                </IonRouterOutlet>
+              </IonReactRouter>
+              :
+              <IonButton onClick={()=>handleAuthentication()}>
+                Login
+              </IonButton>
+              // <Login handleSignIn={handleSignIn} />
             }
           </IonContent>
         </IonApp>
-        :
+        {/* :
         <></>
-      }
+      } */}
     </>
 
   );

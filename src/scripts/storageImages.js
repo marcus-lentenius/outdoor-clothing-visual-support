@@ -5,7 +5,7 @@ import firebase from 'firebase';
  * @returns An Array of image urls
  */
 export const getStorageImages = async () => {
-    const storage = firebase.storage().ref("user/images/");     // Path to folder in firebase storage
+    const storage = firebase.storage().ref("user/images/demo/");     // Path to folder in firebase storage
     const listOfImages = [];
 
     await storage.listAll().then(async (listFromStorage) => {   // Get all images
@@ -26,7 +26,7 @@ export const getStorageImages = async () => {
  * @param {string} imageName The name of the file
  */
 export const deleteImage = async (imageName) => {
-    const storage = firebase.storage().ref('user/images/');     // Path to folder in firebase storage
+    const storage = firebase.storage().ref('user/images/demo/');     // Path to folder in firebase storage
     const imageReference = storage.child(imageName);    // Select image
     await imageReference.delete();
 }
@@ -36,7 +36,7 @@ export const deleteImage = async (imageName) => {
  * @param {string} image The captured image
  */
 export const saveImage = async (image) => {
-    const storage = firebase.storage().ref('user/images/'); // Path to folder in firebase storage
+    const storage = firebase.storage().ref('user/images/demo/'); // Path to folder in firebase storage
     const format = image.format;    // Get the file format
     const imageName = image.webPath.slice(-36);     // Slice the url of the image and return only the filename
 

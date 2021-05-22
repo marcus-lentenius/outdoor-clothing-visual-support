@@ -1,25 +1,21 @@
-import { IonCol, IonContent, IonGrid, IonHeader, button, IonMenu, IonMenuButton, IonRow, IonToolbar, IonList, IonButton, IonItem } from "@ionic/react";
-import React, { useState } from "react";
+import { IonContent, IonMenu } from "@ionic/react";
+import React, { useEffect, useState } from "react";
 import { addGarment, getGarments, removeGarment } from '../../scripts/garmentList';
 import List from './List';
-import Wardrobe from './Wardrobe';
-import SuggestedOutfit from "./SuggestedOutfit";
-import logo from '../../images/noImage.png';
+import Menu from './menu/Menu';
 // import Wardrobe from "./Wardrobe";
 
 const ParentView = () => {
-    const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [listOfGarments, setListOfGarments] = useState([]);
+
+    // Load the garments
+    useEffect(() => {
+        loadGarments();
+    }, [])
 
     // Loads the garments in the list from Firestore
     const loadGarments = async () => {
         setListOfGarments(await getGarments());
-    }
-
-    // Initially loads the list from Firestore
-    if (!isDataLoaded) {
-        loadGarments();
-        setIsDataLoaded(true);
     }
 
     // Adds an item to the list unless it already exist
@@ -36,20 +32,21 @@ const ParentView = () => {
         loadGarments();
     }
 
-    try {
-        document.getElementById('men').open();
-    } catch (error) {
+    // try {
+    //     document.getElementById('men').open();
+    // } catch (error) {
 
-    }
+    // }
+
     return (
-        <> 
-            <IonMenu id="men" IonMenu scrollY side="start" contentId="main-content" type="overlay">
+        <>
+            <IonMenu id="men" side="start" contentId="main-content" type="overlay">
                 <IonContent id="main-content" scrollY>
-                        <Wardrobe
-                            handleAddGarmentToList={handleAddGarmentToList} />
+                    <Menu
+                        handleAddGarmentToList={handleAddGarmentToList} />
                 </IonContent>
             </IonMenu>
-        <IonContent >
+            <IonContent >
                 <List
                     listOfGarments={listOfGarments}
                     handleRemoveGarmentFromList={handleRemoveGarmentFromList} />

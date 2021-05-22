@@ -5,7 +5,7 @@ import Header from '../../shared/Header';
 import { addToWardrobe } from '../../../scripts/wardrobe';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import noImage from '../../../images/noImage.png';
-import Thumbnail from '../Thumbnail';
+import Thumbnail from '../../shared/Thumbnail';
 import { snow, cloudy, leaf, rainy, sunny, accessibility, arrowUndo, arrowUp, swapVertical, cloud, list, shirt } from 'ionicons/icons';
 
 

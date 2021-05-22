@@ -190,7 +190,7 @@ export const getSuggestions = (condition, middleLayers, originalGarments) => {
             }
         }
 
-        const sortOrder = ['overall', 'jacket', 'shellTrousers', 'hat', 'gloves', 'shoes']
+        const sortOrder = ['overall', 'shellTrousers','jacket', 'hat', 'gloves', 'shoes']
 
         suggestedClothes.sort((a, b) => sortOrder.indexOf(a.type) - sortOrder.indexOf(b.type));
 

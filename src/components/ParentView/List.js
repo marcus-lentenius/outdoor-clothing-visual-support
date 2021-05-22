@@ -1,8 +1,8 @@
-import { IonCheckbox, IonIcon, IonicSafeString, IonImg, IonItem, IonLabel, IonList } from '@ionic/react';
+import { IonCheckbox, IonIcon, IonItem, IonLabel, IonList } from '@ionic/react';
 import { trash } from 'ionicons/icons';
-import firebase from 'firebase'
-import React, { useState } from 'react';
-import noImage from '../../images/noImage.png'
+import React from 'react';
+import noImage from '../../images/noImage.png';
+import frameOverlay from '../../images/imageOverlay.png'
 
 /**
  * A list of all garments suggested for the day.
@@ -15,24 +15,48 @@ import noImage from '../../images/noImage.png'
  */
 const List = ({ listOfGarments, handleRemoveGarmentFromList }) => {
     return (
-        <IonList inset>
+        <IonList>
             {listOfGarments.map((garment) => {
                 const labelId = `clothing-list-label-${garment.name}`;
                 return (
-                    <IonItem key={labelId}>
+                    <IonItem key={labelId}
+                        style={{
+                            '--padding-start': '8px',
+                            '--inner-padding-end': '0px',
+                            '--padding-end': '8px',
+                            '--inner-padding-top': '12px',
+                            '--inner-padding-bottom': '12px',
+                        }}>
+                        <IonCheckbox className="check" slot="end" />
                         <IonIcon
+                            style={{
+                                '--inner-padding-start': '0px',
+                                '--padding-start': '0px',
+                                '--inner-padding-end': '0px',
+                                '--padding-end': '0px',
+                            }}
                             icon={trash}
                             slot="end"
                             onClick={() => handleRemoveGarmentFromList(garment)}></IonIcon>
                         {garment.imgSrc === '' ?
                             < img id="chosen-image" src={noImage} />
                             :
-                            <img id="chosen-image" src={garment.imgSrc} />
+                            <div style={{
+                                width: '30vw',
+                                height: '30vw',
+                                position: 'relative',
+                            }
+                            }>
+                                <img className="overlay" src={frameOverlay} />
+                                <img id={garment.name + '-image'} src={garment.imgSrc} />
+                            </div>
                         }
-                        <IonLabel>
+                        <IonLabel
+                            style={{
+                                marginLeft: '16px'
+                            }}>
                             {garment.name}
                         </IonLabel>
-                        <IonCheckbox className="check" slot="start" />
                     </IonItem>
                 )
             })}

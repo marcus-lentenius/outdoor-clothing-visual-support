@@ -1,8 +1,7 @@
-import React from 'react'
-import { IonGrid, IonRow, IonIcon, IonItem, IonLabel, IonCol, IonCard, IonCardContent, IonButton, IonContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonThumbnail, IonAvatar, IonItemDivider } from '@ionic/react';
-import { snow, cloudy, leaf, rainy, sunny, trash, thermometer, arrowDown, arrowUndo, arrowUp, swapVertical } from 'ionicons/icons';
-import noImage from '../../images/noImage.png';
-import Thumbnail from './Thumbnail';
+import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonIcon, IonRow } from '@ionic/react';
+import { arrowDown, arrowUp, cloudy, leaf, rainy, snow, sunny, trash } from 'ionicons/icons';
+import React from 'react';
+import Thumbnail from '../../shared/Thumbnail';
 
 const style = {
     title: {
@@ -67,7 +66,7 @@ const Garment = ({ garment, handleRemoveGarment }) => {
                                         icon={sunny} />
                                 );
                             }
-                            if (condition === 'cloud') {
+                            if (condition === 'clouds') {
                                 return (
                                     <IonIcon key={'icon-label-' + garment.name + '-' + condition}
                                         style={style.icon}

@@ -1,4 +1,4 @@
-import { IonCheckbox, IonCol, IonGrid, IonItem, IonList, IonRow } from '@ionic/react';
+import { IonCheckbox, IonCol, IonContent, IonGrid, IonItem, IonList, IonRow } from '@ionic/react';
 import React, { useState } from 'react';
 import { getGarments } from '../../scripts/garmentList';
 import './UserView.css';
@@ -27,13 +27,13 @@ const UserView = () => {
     }
     
     return (
-        <>
+        <IonContent scrollY>
             <IonGrid>
                 <IonRow>
                     {listOfGarments.map((garment) => {
                         const labelId = `clothing-list-label-${garment.name}`;
                         return (
-                            <IonCol key={labelId}>
+                            <IonCol key={labelId} size='auto'>
                                 <div className="container">
                                     <img className="overlay" src={frameOverlay} />
                                     <img id={garment.name + '-image'} src={garment.imgSrc} />
@@ -44,7 +44,7 @@ const UserView = () => {
                     })}
                 </IonRow>
             </IonGrid>
-        </>
+        </IonContent>
     )
 }
 

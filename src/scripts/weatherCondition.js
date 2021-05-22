@@ -6,7 +6,7 @@ import token from './openWeatherMapToken';
  */
 export const getWeatherCondition = async () => {
     // Requests weather data in Stockholm
-    const url = 'http://api.openweathermap.org/data/2.5/find?q=Stockholm&mode=json&units=metric&appid=';
+    const url = 'http://api.openweathermap.org/data/2.5/find?q=hägersten&mode=json&units=metric&appid=';
     return new Promise(async (resolve) => {
         const response = await fetch(url + token);
         const data = await response.json();
